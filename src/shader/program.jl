@@ -57,7 +57,6 @@ mutable struct Program <: AbstractProgram
         # Remove old shaders
         exists_context()
         program = glCreateProgram()::GLuint
-        glUseProgram(program)
         #attach new ones
         foreach(shaders) do shader
             glAttachShader(program, shader.id)
