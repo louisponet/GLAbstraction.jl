@@ -42,7 +42,7 @@ import Base: ==
 Base.hash(s::Shader, h::UInt64) = hash((s.source, s.typ, s.id, s.context), h)
 
 function Base.show(io::IO, shader::Shader)
-    println(io, GLENUM(shader.typ).name, " shader: $(shader.name))")
+    println(io, GLENUM(shader.typ).name, " shader: $(shader.name)")
     println(io, "source:")
     print_with_lines(io, String(shader.source))
 end
