@@ -38,7 +38,7 @@ end
 Shader(path::File{format"GLSLShader"}) = load(path)
 
 import Base: ==
-(==)(a::Shader, b::Shader) = a.source == b.source && a.typ == b.typ && a.id == b.id && a.context == b.context
+(==)(a::Shader, b::Shader) = a.source == b.source && a.typ == b.typ && a.id == b.id
 Base.hash(s::Shader, h::UInt64) = hash((s.source, s.typ, s.id, s.context), h)
 
 function Base.show(io::IO, shader::Shader)
