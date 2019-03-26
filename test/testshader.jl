@@ -1,7 +1,8 @@
 module TestShader
 using ModernGL
 using GLAbstraction: shadertype, attributes, uniform_location, uniform_type,
-    uniform_size, attribute_location, getinfolog, Program, set_uniform
+    uniform_size, attribute_location, getinfolog, Program, set_uniform,
+    bind
 using Test
 using FileIO
 using GLFW
