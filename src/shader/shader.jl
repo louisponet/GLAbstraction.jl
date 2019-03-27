@@ -112,6 +112,8 @@ macro comp_str(source::AbstractString)
     end
 end
 
+# TODO: maybe rename this to getshaderinfolog to make it clear that it can't
+#       return the info log for a program, or implement that it can...
 function getinfolog(id::GLuint)
     # Get the maximum possible length for the descriptive error message
     maxlength = GLint[0]
