@@ -97,6 +97,10 @@ GLFW.MakeContextCurrent(window)
             attriblocation=[(2, "position"), (4, "texcoord")])
     @test attribute_location(p2, :position) == 2
     @test attribute_location(p2, :texcoord) == 4
+
+    # test linking a broken program
+    p = Program([vertshader, brokenshader])
+
  end
 
 # clean up test context
