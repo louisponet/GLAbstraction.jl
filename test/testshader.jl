@@ -88,6 +88,8 @@ set_context!(Context(:window))
     vec3 = rand(GLfloat, 3)
     set_uniform(p, :color, vec3)
     @test get_uniform(p, :color) == vec3
+    set_uniform(p, Symbol("structtest.a"), vec3)
+    @test get_uniform(p, Symbol("structtest.a")) == vec3
 
     v = rand(GLfloat)
     set_uniform(p, :exposure, v)
