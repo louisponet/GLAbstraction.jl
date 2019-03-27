@@ -24,7 +24,7 @@ function Shader(name, shadertype, source::Vector{UInt8})
     glShaderSource(shaderid, source)
     glCompileShader(shaderid)
     if !iscompiled(shaderid)
-        print_with_lines(String(source))
+        print_with_lines(String(copy(source)))
         @error "shader $(name) didn't compile. \n$(getinfolog(shaderid))"
     end
     Shader(name, source, shadertype, shaderid)
@@ -44,9 +44,20 @@ Base.hash(s::Shader, h::UInt64) = hash((s.source, s.typ, s.id, s.context), h)
 function Base.show(io::IO, shader::Shader)
     println(io, GLENUM(shader.typ).name, " shader: $(shader.name)")
     println(io, "source:")
-    print_with_lines(io, String(shader.source))
+    print_with_lines(io, shadersource(shader))
 end
 
+"""
+    shadersource(s::Shader)
+
+Return the source code of the shader as String.
+
+This method should be prefered over directly accessing the `Shader`s source
+field since it makes sure to use a copy of the `UInt8` vector to create the
+`String` to avoid truncation of the source `UInt8` vector field (see
+documentation on [`String`](@ref)).
+"""
+shadersource(s::Shader) = String(copy(s.source))
 shadertype(s::Shader) = s.typ
 function shadertype(f::File{format"GLSLShader"})
     shadertype(file_extension(f))

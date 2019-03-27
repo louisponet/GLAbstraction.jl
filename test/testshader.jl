@@ -24,7 +24,12 @@ GLFW.MakeContextCurrent(window)
     # test the show method of Shader. only make sure that it runs and returns
     # some non empty string since we don't want to update the test everytime
     # the display of a shader may be changed
+    # we also check that the source field of Shader is not empty after show
+    # which is cause when using String(shader.source) instead of
+    # String(copy(shader.source))
+    @test !isempty(vertshader.source)
     @test repr(vertshader) != ""
+    @test !isempty(vertshader.source)
     @test getinfolog(vertshader.id) == "success"
 
     # test a fragment shader
