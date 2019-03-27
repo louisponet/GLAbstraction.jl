@@ -93,12 +93,6 @@ set_context!(Context(:window))
     set_uniform(p, :exposure, v)
     @test get_uniform(p, :exposure) == v
 
-    # test setting attribute locations
-    p2 = Program([vertshader, fragshader],
-            attriblocation=[(2, "position"), (4, "texcoord")])
-    @test attribute_location(p2, :position) == 2
-    @test attribute_location(p2, :texcoord) == 4
-
     # test linking a broken program
     p = Program([vertshader, brokenshader])
 
