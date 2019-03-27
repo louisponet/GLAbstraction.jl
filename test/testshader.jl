@@ -2,7 +2,7 @@ module TestShader
 using ModernGL
 using GLAbstraction: shadertype, attributes, uniform_location, uniform_type,
     uniform_size, attribute_location, getinfolog, Program, set_uniform,
-    bind
+    bind, set_context!, Context
 using Test
 using FileIO
 using GLFW
@@ -12,6 +12,7 @@ GLFW.WindowHint(GLFW.VISIBLE, false)
 window = GLFW.CreateWindow(640, 480, "Test context")
 @test window != C_NULL
 GLFW.MakeContextCurrent(window)
+set_context!(Context(:window))
 
 
 @testset "Test shaders" begin
