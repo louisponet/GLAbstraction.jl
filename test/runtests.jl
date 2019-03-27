@@ -4,6 +4,8 @@ function is_ci()
     get(ENV, "CI", "") == "true"
 end
 
+include("testshader.jl")
+#=
 using GLAbstraction, GeometryTypes, ModernGL, FileIO, GLWindow
 using ColorTypes
 using Base.Test
@@ -59,3 +61,5 @@ end
 GLFW.DestroyWindow(window)
 
 end
+
+=#
