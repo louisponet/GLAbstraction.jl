@@ -173,8 +173,12 @@ function free!(x::VertexArray)
         return
     end
     id = [x.id]
-    for buffer in x.buffers
-        free!(buffer)
+	# TODO: Is this necessary? The buffers are freed anyway when the last
+	# 	pointer to the buffer is garbage collected.
+	#   Also: deleting the buffers here means that the VertexArray took
+	#	ownership of them and buffers can't be really shared between VAs...
+    for bufferinfo in x.bufferinfos
+        free!(bufferinfo.buffer)
     end
     if x.indices != nothing
         free!(x.indices)
