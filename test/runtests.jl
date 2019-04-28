@@ -5,6 +5,7 @@ function is_ci()
 end
 
 include("testbuffer.jl")
+include("testvertexarray.jl")
 #include("testshader.jl")
 
 #=
