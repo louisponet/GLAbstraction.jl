@@ -1,5 +1,15 @@
 import Base.Iterators.Repeated
 
+"""
+Represents an OpenGL Buffer.
+
+Note: The memory allocated for the buffer on the gpu is automatically cleaned
+when the Buffer object is garbage collected. Therefore the user has to make
+sure to keep an object of the Buffer alive as long as the buffer is needed on
+the GPU.
+TODO: this should probably a general note for GLAbstraction since its true
+	for all objects
+"""
 mutable struct Buffer{T} <: GPUArray{T, 1}
     id          ::GLuint
     size        ::Tuple{Int}
