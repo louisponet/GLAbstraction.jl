@@ -27,6 +27,25 @@ function setup_attributes(program::GLuint)
     return info
 end
 
+# TODO: implementation of this is almost identical to Shaders getinfolog
+#       -> check if they can be unified somehow
+function getprograminfolog(id::GLuint)
+    # Get the maximum possible length for the descriptive error message
+    maxlength = GLint[0]
+    glGetProgramiv(id, GL_INFO_LOG_LENGTH, maxlength)
+    maxlength = first(maxlength)
+    # Return the text of the message if there is any
+    if maxlength > 0
+        buffer = zeros(GLchar, maxlength)
+        sizei = GLsizei[0]
+        glGetProgramInfoLog(id, maxlength, sizei, buffer)
+        length = first(sizei)
+        return unsafe_string(pointer(buffer), length)
+    else
+        return "success"
+    end
+end
+
 abstract type AbstractProgram end
 mutable struct Program <: AbstractProgram
     id        ::GLuint
@@ -38,7 +57,6 @@ mutable struct Program <: AbstractProgram
         # Remove old shaders
         exists_context()
         program = glCreateProgram()::GLuint
-        glUseProgram(program)
         #attach new ones
         foreach(shaders) do shader
             glAttachShader(program, shader.id)
@@ -53,10 +71,10 @@ mutable struct Program <: AbstractProgram
         glLinkProgram(program)
         if !islinked(program)
             for shader in shaders
-                write(stdout, shader.source)
+                print_with_lines(shadersource(shader))
                 println("---------------------------")
             end
-            @error "program $program not linked. Error in: \n $(join(map(x-> string(x.name), shaders))), or, \n $(getinfolog(program))"
+            @error "program $program not linked. Error in: \n $(join(map(x-> string(x.name), shaders), ", ")) or \n $(getprograminfolog(program))"
         end
 
         # generate the link locations
